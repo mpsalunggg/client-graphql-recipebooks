@@ -1,16 +1,12 @@
 import { FC } from 'react'
 import { FaHeart, FaPencilAlt, FaTrash } from 'react-icons/fa'
 import { useModal } from '../../context/ModalContext'
+import ModalRecipe from './components/ModalRecipe'
 
 const Main: FC = () => {
   const { openModal } = useModal()
   const handleOpenModal = () => {
-    openModal(
-      <div>
-        <h2 className="text-xl mb-4">Modal Title</h2>
-        <p>Modal content goes here.</p>
-      </div>
-    )
+    openModal(<ModalRecipe />)
   }
   return (
     <div>
