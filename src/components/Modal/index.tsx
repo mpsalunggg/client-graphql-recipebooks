@@ -17,7 +17,7 @@ const Modal: FC = () => {
       className="fixed inset-0 bg-gray-600 px-8 bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50"
       onClick={handleClickOutside}
     >
-      <div className="bg-primary-content p-7 rounded-xl shadow-md lg:w-1/3 w-full">
+      <div className="bg-primary-content p-7 rounded-xl shadow-md lg:w-1/3 w-full max-h-96 lg:max-h-full overflow-scroll">
         {modalContent}
         <div className="flex justify-end">
           <button
