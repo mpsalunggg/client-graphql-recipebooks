@@ -21,9 +21,9 @@ const Navbar = () => {
       ) : (
         <FaMoon
           size={15}
-          className={
+          className={`${
             currentTheme === 'night' ? 'text-primary' : 'text-primary-content'
-          }
+          } cursor-pointer`}
           onClick={() =>
             handleChangeTheme(currentTheme === 'lofi' ? 'night' : 'lofi')
           }
