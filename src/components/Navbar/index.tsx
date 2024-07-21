@@ -1,21 +1,8 @@
-import { useEffect, useState } from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa'
+import { useTheme } from '../../context/ThemeContext'
 
 const Navbar = () => {
-  const themes: string[] = ['lofi', 'night']
-  const [currentTheme, setCurrentTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme')
-    return savedTheme && themes.includes(savedTheme) ? savedTheme : 'lofi'
-  })
-
-  useEffect(() => {
-    localStorage.setItem('theme', currentTheme)
-    document.documentElement.setAttribute('data-theme', currentTheme)
-  }, [currentTheme])
-
-  const handleChangeTheme = (theme: string) => {
-    setCurrentTheme(theme)
-  }
+  const { currentTheme, handleChangeTheme } = useTheme()
 
   return (
     <div className="navbar bg-primary-content text-primary-content py-6 lg:px-96 px-8 flex justify-between items-center border-b border-primary">
