@@ -1,7 +1,9 @@
 import { ChangeEvent, useState } from 'react'
 import { FaMinusCircle } from 'react-icons/fa'
+import { useModal } from '../../../../context/ModalContext'
 
 const ModalRecipe = () => {
+  const { closeModal } = useModal()
   const [ingredients, setIngredients] = useState<string[]>([])
   const [recipe, setRecipe] = useState({
     title: '',
@@ -23,6 +25,11 @@ const ModalRecipe = () => {
       ...recipe,
       [name]: value,
     })
+  }
+
+  const handleDeleteIngredients = (idx: number) => {
+    const newData = ingredients.filter((_, index) => index !== idx)
+    setIngredients(newData)
   }
   return (
     <div>
@@ -64,7 +71,7 @@ const ModalRecipe = () => {
             <button
               className="btn btn-primary btn-sm"
               onClick={() => {
-                handleAddIngredients(recipe.ingredients)
+                recipe.ingredients && handleAddIngredients(recipe.ingredients)
               }}
             >
               +
@@ -78,7 +85,11 @@ const ModalRecipe = () => {
               className="badge badge-primary badge-outline rounded-sm flex items-center gap-1"
             >
               {item}
-              <FaMinusCircle size={12} />
+              <FaMinusCircle
+                size={12}
+                onClick={() => handleDeleteIngredients(index)}
+                className="cursor-pointer"
+              />
             </div>
           ))}
         </div>
@@ -93,8 +104,16 @@ const ModalRecipe = () => {
           onChange={handleChange}
         />
       </div>
-      <div className="mt-4">
-        <button className="btn btn-primary btn-sm w-full">Submit</button>
+      <div className="flex justify-end mt-4 gap-2">
+        <button className="bg-green-500 hover:bg-green-400 text-primary-content btn btn-sm rounded-md">
+          Submit
+        </button>
+        <button
+          className="btn btn-primary btn-sm rounded-md"
+          onClick={closeModal}
+        >
+          Close
+        </button>
       </div>
     </div>
   )

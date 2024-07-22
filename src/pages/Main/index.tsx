@@ -2,11 +2,15 @@ import { FC } from 'react'
 import { FaHeart, FaPencilAlt, FaTrash } from 'react-icons/fa'
 import { useModal } from '../../context/ModalContext'
 import ModalRecipe from './components/ModalRecipe'
+import ModalDelete from './components/ModalDelete'
 
 const Main: FC = () => {
   const { openModal } = useModal()
   const handleOpenModal = () => {
-    openModal(<ModalRecipe />)
+    openModal(<ModalRecipe /> )
+  }
+  const handleDeleteModal = () => {
+    openModal(<ModalDelete />)
   }
   return (
     <div>
@@ -36,7 +40,10 @@ const Main: FC = () => {
           <div className="flex justify-between items-center">
             <FaHeart className="text-red-500" />
             <div className="flex justify-end gap-2">
-              <button className="bg-red-500 hover:bg-red-400 btn-sm rounded-md">
+              <button
+                className="bg-red-500 hover:bg-red-400 btn-sm rounded-md"
+                onClick={handleDeleteModal}
+              >
                 <FaTrash className="text-white" />
               </button>
               <button className="bg-green-500 hover:bg-green-400 btn-sm rounded-md">

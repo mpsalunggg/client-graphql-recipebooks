@@ -16,9 +16,7 @@ interface ModalContextType {
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined)
 
-export const ModalProvider: FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const ModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState<ReactElement | null>(null)
 
