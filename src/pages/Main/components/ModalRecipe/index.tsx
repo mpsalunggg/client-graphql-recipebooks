@@ -105,9 +105,15 @@ const ModalRecipe: FC<{ type: string }> = ({ type }) => {
         />
       </div>
       <div className="flex justify-end mt-4 gap-2">
-        <button className="bg-green-500 hover:bg-green-400 text-primary-content btn btn-sm rounded-md">
-          {type === 'Edit' ? 'Edit' : 'Submit'}
-        </button>
+        {type === 'Edit' ? (
+          <button className="bg-green-500 hover:bg-green-400 text-primary-content btn btn-sm rounded-md">
+            Edit
+          </button>
+        ) : (
+          <button className="text-primary-content btn-primary btn btn-sm rounded-md">
+            Submit
+          </button>
+        )}
         <button
           className="btn btn-primary btn-sm rounded-md"
           onClick={closeModal}

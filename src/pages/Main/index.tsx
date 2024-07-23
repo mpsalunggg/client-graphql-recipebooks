@@ -15,8 +15,8 @@ const Main: FC = () => {
   return (
     <div>
       <div className="toast toast-center">
-        <div className="alert alert-success">
-          <span>Message sent successfully.</span>
+        <div className="alert alert-success rounded-md">
+          <span>Success add recipe</span>
         </div>
       </div>
       <button
