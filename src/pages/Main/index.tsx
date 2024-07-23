@@ -6,8 +6,8 @@ import ModalDelete from './components/ModalDelete'
 
 const Main: FC = () => {
   const { openModal } = useModal()
-  const handleOpenModal = () => {
-    openModal(<ModalRecipe /> )
+  const handleOpenModal = (type: string) => {
+    openModal(<ModalRecipe type={type} />)
   }
   const handleDeleteModal = () => {
     openModal(<ModalDelete />)
@@ -21,7 +21,7 @@ const Main: FC = () => {
       </div>
       <button
         className="btn btn-sm w-full btn-primary rounded-md mb-4"
-        onClick={handleOpenModal}
+        onClick={() => handleOpenModal('Add')}
       >
         + Recipe
       </button>
@@ -47,7 +47,10 @@ const Main: FC = () => {
                 <FaTrash className="text-white" />
               </button>
               <button className="bg-green-500 hover:bg-green-400 btn-sm rounded-md">
-                <FaPencilAlt className="text-white" />
+                <FaPencilAlt
+                  className="text-white"
+                  onClick={() => handleOpenModal('Edit')}
+                />
               </button>
             </div>
           </div>

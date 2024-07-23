@@ -1,8 +1,8 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import { FaMinusCircle } from 'react-icons/fa'
 import { useModal } from '../../../../context/ModalContext'
 
-const ModalRecipe = () => {
+const ModalRecipe: FC<{ type: string }> = ({ type }) => {
   const { closeModal } = useModal()
   const [ingredients, setIngredients] = useState<string[]>([])
   const [recipe, setRecipe] = useState({
@@ -33,7 +33,7 @@ const ModalRecipe = () => {
   }
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4 text-primary">Add Recipe</h2>
+      <h2 className="text-xl font-semibold mb-4 text-primary">{type} Recipe</h2>
       <div className="form-control mb-4">
         <label className="label">
           <span className="label-text">Title</span>
@@ -106,7 +106,7 @@ const ModalRecipe = () => {
       </div>
       <div className="flex justify-end mt-4 gap-2">
         <button className="bg-green-500 hover:bg-green-400 text-primary-content btn btn-sm rounded-md">
-          Submit
+          {type === 'Edit' ? 'Edit' : 'Submit'}
         </button>
         <button
           className="btn btn-primary btn-sm rounded-md"
