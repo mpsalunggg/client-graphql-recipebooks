@@ -3,15 +3,20 @@ import { FaHeart, FaPencilAlt, FaTrash } from 'react-icons/fa'
 import { useModal } from '../../context/ModalContext'
 import ModalRecipe from './components/ModalRecipe'
 import ModalDelete from './components/ModalDelete'
+import { useGetRecipes } from '../../services/recipes'
+import { Recipe } from '../../services/recipes/type'
 
 const Main: FC = () => {
   const { openModal } = useModal()
+  const { loading, data } = useGetRecipes()
+
   const handleOpenModal = (type: string) => {
     openModal(<ModalRecipe type={type} />)
   }
   const handleDeleteModal = () => {
     openModal(<ModalDelete />)
   }
+
   return (
     <div>
       <div className="toast toast-center">
@@ -25,36 +30,47 @@ const Main: FC = () => {
       >
         + Recipe
       </button>
-      <div
-        className="card w-full h-max-32 bg-cover bg-center rounded-md shadow-md"
-        style={{
-          backgroundImage:
-            "url('https://cdn1-production-images-kly.akamaized.net/5Rgd9MT6ayaE2xEUHS3XWIzpc6w=/0x281:4653x2903/800x450/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3049433/original/093267200_1581580862-shutterstock_294636281.jpg')",
-        }}
-      >
-        <div className="card-body p-4 bg-opacity-60 bg-gray-800 rounded-md h-full">
-          <h2 className="card-title text-white text-xl font-bold">Pizza</h2>
-          <p className="text-white">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-          </p>
-          <div className="flex justify-between items-center">
-            <FaHeart className="text-red-500" />
-            <div className="flex justify-end gap-2">
-              <button
-                className="bg-red-500 hover:bg-red-400 btn-sm rounded-md"
-                onClick={handleDeleteModal}
+      <div className='flex flex-col gap-3'>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          data?.recipes.map((item: Recipe) => {
+            const { id, title, description, img } = item
+            return (
+              <div
+                className="card w-full h-max-32 bg-cover bg-center rounded-md shadow-md"
+                style={{
+                  backgroundImage: `url(${img})`,
+                }}
+                key={id}
               >
-                <FaTrash className="text-white" />
-              </button>
-              <button className="bg-green-500 hover:bg-green-400 btn-sm rounded-md">
-                <FaPencilAlt
-                  className="text-white"
-                  onClick={() => handleOpenModal('Edit')}
-                />
-              </button>
-            </div>
-          </div>
-        </div>
+                <div className="card-body p-4 bg-opacity-60 bg-gray-800 rounded-md h-full">
+                  <h2 className="card-title text-white text-xl font-bold">
+                    {title}
+                  </h2>
+                  <p className="text-white line-clamp-1">{description}</p>
+                  <div className="flex justify-between items-center">
+                    <FaHeart className="text-red-500" />
+                    <div className="flex justify-end gap-2">
+                      <button
+                        className="bg-red-500 hover:bg-red-400 btn-sm rounded-md"
+                        onClick={handleDeleteModal}
+                      >
+                        <FaTrash className="text-white" />
+                      </button>
+                      <button className="bg-green-500 hover:bg-green-400 btn-sm rounded-md">
+                        <FaPencilAlt
+                          className="text-white"
+                          onClick={() => handleOpenModal('Edit')}
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })
+        )}
       </div>
     </div>
   )
