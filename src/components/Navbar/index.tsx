@@ -1,7 +1,8 @@
+import { FC } from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import { useTheme } from '../../context/ThemeContext'
 
-const Navbar = () => {
+const Navbar: FC = () => {
   const { currentTheme, handleChangeTheme } = useTheme()
 
   return (

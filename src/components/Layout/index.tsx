@@ -1,9 +1,10 @@
+import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from '../Navbar'
 import Modal from '../Modal'
 import { ModalProvider } from '../../context/ModalContext'
 
-const Layout = () => {
+const Layout: FC = () => {
   return (
     <ModalProvider>
       <div>
