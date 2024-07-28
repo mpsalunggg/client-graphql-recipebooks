@@ -5,6 +5,7 @@ import ModalDelete from './components/ModalDelete'
 import { useGetRecipes } from '../../services/recipes'
 import { Recipe } from '../../services/recipes/type'
 import Card from './components/Card'
+import Loading from '../../components/Loading'
 
 const Main: FC = () => {
   const { openModal } = useModal()
@@ -32,7 +33,7 @@ const Main: FC = () => {
       </button>
       <div className="flex flex-col gap-3">
         {loading ? (
-          <p>Loading...</p>
+          <Loading />
         ) : (
           data?.recipes.map((item: Recipe) => {
             return (
