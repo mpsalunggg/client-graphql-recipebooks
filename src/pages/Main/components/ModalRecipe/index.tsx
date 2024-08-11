@@ -1,9 +1,11 @@
 import { ChangeEvent, FC, useState } from 'react'
 import { FaMinusCircle } from 'react-icons/fa'
 import { useModal } from '../../../../context/ModalContext'
+import { useAlert } from '../../../../context/AlertContext'
 
 const ModalRecipe: FC<{ type: string }> = ({ type }) => {
   const { closeModal } = useModal()
+  const { showAlert } = useAlert()
   const [ingredients, setIngredients] = useState<string[]>([])
   const [recipe, setRecipe] = useState({
     title: '',
@@ -110,7 +112,10 @@ const ModalRecipe: FC<{ type: string }> = ({ type }) => {
             Edit
           </button>
         ) : (
-          <button className="text-primary-content btn-primary btn btn-sm rounded-md">
+          <button
+            className="text-primary-content btn-primary btn btn-sm rounded-md"
+            onClick={() => showAlert('Test', 'success')}
+          >
             Submit
           </button>
         )}

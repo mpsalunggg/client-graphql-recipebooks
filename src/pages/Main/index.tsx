@@ -6,6 +6,7 @@ import { useGetRecipes } from '../../services/recipes'
 import { Recipe } from '../../services/recipes/type'
 import Card from './components/Card'
 import Loading from '../../components/Loading'
+import Alert from '../../components/Alert'
 
 const Main: FC = () => {
   const { openModal } = useModal()
@@ -20,11 +21,7 @@ const Main: FC = () => {
 
   return (
     <div>
-      <div className="toast toast-center">
-        <div className="alert alert-success rounded-md">
-          <span>Success add recipe</span>
-        </div>
-      </div>
+      <Alert />
       <button
         className="btn btn-sm w-full btn-primary rounded-md mb-4"
         onClick={() => handleOpenModal('Add')}
