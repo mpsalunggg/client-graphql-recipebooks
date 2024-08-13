@@ -26,17 +26,14 @@ export const AlertProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const showAlert = (message: string, type: AlertType) => {
     setAlertMessage(message)
     setAlertType(type)
-    // Hentikan timeout sebelumnya jika ada
     if (timeoutId !== null) {
       clearTimeout(timeoutId)
     }
 
-    // Mulai timeout baru
-    const newTimeoutId = window.setTimeout(() => {
+    const newTimeoutId = setTimeout(() => {
       hideAlert()
-    }, 2500)
+    }, 3000)
 
-    // Simpan timeout ID di state
     setTimeoutId(newTimeoutId)
   }
 
@@ -51,7 +48,6 @@ export const AlertProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }
 
   useEffect(() => {
-    // Cleanup timeout saat komponen di-unmount
     return () => {
       if (timeoutId !== null) {
         clearTimeout(timeoutId)

@@ -2,20 +2,23 @@ import { ChangeEvent, FC, useState } from 'react'
 import { FaMinusCircle } from 'react-icons/fa'
 import { useModal } from '../../../../context/ModalContext'
 import { useAlert } from '../../../../context/AlertContext'
+import { useAddRecipe } from '../../../../services/recipes'
+import { GET_RECIPES } from '../../../../services/recipes/queries'
 
 const ModalRecipe: FC<{ type: string }> = ({ type }) => {
   const { closeModal } = useModal()
   const { showAlert } = useAlert()
   const [ingredients, setIngredients] = useState<string[]>([])
+  const { addRecipe, loading } = useAddRecipe()
   const [recipe, setRecipe] = useState({
     title: '',
+    description: '',
     image_url: '',
     ingredients: '',
     instructions: '',
   })
 
   const handleAddIngredients = (value: string) => {
-    console.log(recipe)
     setIngredients([...ingredients, value])
   }
 
@@ -33,6 +36,28 @@ const ModalRecipe: FC<{ type: string }> = ({ type }) => {
     const newData = ingredients.filter((_, index) => index !== idx)
     setIngredients(newData)
   }
+
+  const handleAddRecipe = () => {
+    addRecipe({
+      variables: {
+        ...recipe,
+        img: recipe.image_url,
+        ingredients,
+      },
+      onCompleted: () => {
+        showAlert('Recipe added successfully!', 'success')
+        closeModal()
+      },
+      onError: (err) => {
+        showAlert(`Failed to add recipe. ${err.message}`, 'error')
+      },
+      refetchQueries: [
+        {
+          query: GET_RECIPES,
+        },
+      ],
+    })
+  }
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-primary">{type} Recipe</h2>
@@ -42,6 +67,17 @@ const ModalRecipe: FC<{ type: string }> = ({ type }) => {
         </label>
         <input
           name="title"
+          type="text"
+          className="input input-bordered input-sm"
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-control mb-4">
+        <label className="label">
+          <span className="label-text">Description</span>
+        </label>
+        <input
+          name="description"
           type="text"
           className="input input-bordered input-sm"
           onChange={handleChange}
@@ -114,9 +150,10 @@ const ModalRecipe: FC<{ type: string }> = ({ type }) => {
         ) : (
           <button
             className="text-primary-content btn-primary btn btn-sm rounded-md"
-            onClick={() => showAlert('Test', 'success')}
+            disabled={loading}
+            onClick={() => handleAddRecipe()}
           >
-            Submit
+            {loading ? 'Loading' : 'Submit'}
           </button>
         )}
         <button

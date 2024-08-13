@@ -7,13 +7,25 @@ const Alert: FC = () => {
 
   return (
     <div
-      className={`toast toast-center transition-all ${
+      className={`toast toast-center min-w-full lg:px-96 px-8 z-[99] transition-all ${
         !alertMessage ? 'scale-0' : 'visible'
       }`}
     >
-      <div className="alert alert-success rounded-md">
-        {alertType === 'success' ? <FaCheckCircle /> : <FaMinusCircle />}
-        <span>Success add recipe</span>
+      <div
+        className={`alert ${
+          alertType === 'success' ? 'bg-green-500' : 'bg-red-500'
+        } rounded-xl flex items-center gap-2 border-none`}
+      >
+        <div className="w-6">
+          {alertType === 'success' ? (
+            <FaCheckCircle className="text-white" />
+          ) : (
+            <FaMinusCircle className="text-white" />
+          )}
+        </div>
+        <div className="overflow-y-auto">
+          <p className="text-white">{alertMessage}</p>
+        </div>
       </div>
     </div>
   )
