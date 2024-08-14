@@ -39,6 +39,9 @@ export const ADD_RECIPE = gql`
 
 export const DELETE_RECIPE = gql`
   mutation DeleteRecipe($id: ID!) {
-    deleteRecipe(id: $id)
+    deleteRecipe(id: $id) {
+      id
+      title
+    }
   }
 `

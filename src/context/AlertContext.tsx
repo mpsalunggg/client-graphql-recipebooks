@@ -39,7 +39,6 @@ export const AlertProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const hideAlert = () => {
     setAlertMessage(null)
-    setAlertType(null)
 
     if (timeoutId !== null) {
       clearTimeout(timeoutId)

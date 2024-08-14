@@ -15,8 +15,8 @@ const Main: FC = () => {
   const handleOpenModal = (type: string) => {
     openModal(<ModalRecipe type={type} />)
   }
-  const handleDeleteModal = () => {
-    openModal(<ModalDelete />)
+  const handleDeleteModal = (id: string) => {
+    openModal(<ModalDelete id={id} />)
   }
 
   return (
@@ -37,7 +37,7 @@ const Main: FC = () => {
               <Card
                 key={item.id}
                 item={item}
-                handleDeleteModal={handleDeleteModal}
+                handleDeleteModal={() => handleDeleteModal(item.id)}
                 handleOpenModal={handleOpenModal}
               />
             )
