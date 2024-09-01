@@ -4,8 +4,12 @@ import { useModal } from '../../../../context/ModalContext'
 import { useAlert } from '../../../../context/AlertContext'
 import { useAddRecipe } from '../../../../services/recipes'
 import { GET_RECIPES } from '../../../../services/recipes/queries'
+import { Recipe } from '../../../../services/recipes/type'
 
-const ModalRecipe: FC<{ type: string }> = ({ type }) => {
+const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({
+  type,
+  data,
+}) => {
   const { closeModal } = useModal()
   const { showAlert } = useAlert()
   const [ingredients, setIngredients] = useState<string[]>([])
@@ -21,7 +25,7 @@ const ModalRecipe: FC<{ type: string }> = ({ type }) => {
   const handleAddIngredients = (value: string) => {
     setIngredients([...ingredients, value])
   }
-
+  console.log('ini data', data)
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {

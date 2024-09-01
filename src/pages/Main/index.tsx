@@ -12,8 +12,8 @@ const Main: FC = () => {
   const { openModal } = useModal()
   const { loading, data } = useGetRecipes()
 
-  const handleOpenModal = (type: string) => {
-    openModal(<ModalRecipe type={type} />)
+  const handleOpenModal = (type: string, data?: Recipe) => {
+    openModal(<ModalRecipe type={type} data={data}/>)
   }
   const handleDeleteModal = (id: string) => {
     openModal(<ModalDelete id={id} />)

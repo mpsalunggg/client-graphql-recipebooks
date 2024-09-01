@@ -5,7 +5,7 @@ import { FaHeart, FaPencilAlt, FaTrash } from 'react-icons/fa'
 interface CardProps {
   item: Recipe
   handleDeleteModal: () => void
-  handleOpenModal: (type: string) => void
+  handleOpenModal: (type: string, data: Recipe) => void
 }
 
 const Card: FC<CardProps> = ({ item, handleDeleteModal, handleOpenModal }) => {
@@ -32,7 +32,7 @@ const Card: FC<CardProps> = ({ item, handleDeleteModal, handleOpenModal }) => {
             <button className="bg-green-500 hover:bg-green-400 btn-sm rounded-md">
               <FaPencilAlt
                 className="text-white"
-                onClick={() => handleOpenModal('Edit')}
+                onClick={() => handleOpenModal('Edit', item)}
               />
             </button>
           </div>

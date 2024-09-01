@@ -7,6 +7,9 @@ export const GET_RECIPES = gql`
       title
       description
       img
+      ingredients
+      instructions
+      isFavorite
     }
   }
 `

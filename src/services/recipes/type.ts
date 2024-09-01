@@ -3,6 +3,9 @@ export interface Recipe {
   title: string
   description?: string
   img?: string
+  ingredients: string[]
+  instructions: string
+  isFavorite: boolean
 }
 
 export interface Recipes {
