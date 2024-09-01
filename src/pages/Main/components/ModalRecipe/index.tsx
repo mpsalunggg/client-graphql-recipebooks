@@ -6,26 +6,25 @@ import { useAddRecipe } from '../../../../services/recipes'
 import { GET_RECIPES } from '../../../../services/recipes/queries'
 import { Recipe } from '../../../../services/recipes/type'
 
-const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({
-  type,
-  data,
-}) => {
+const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({ type, data }) => {
   const { closeModal } = useModal()
   const { showAlert } = useAlert()
-  const [ingredients, setIngredients] = useState<string[]>([])
+  const [ingredients, setIngredients] = useState<string[]>(
+    data?.ingredients || []
+  )
   const { addRecipe, loading } = useAddRecipe()
   const [recipe, setRecipe] = useState({
-    title: '',
-    description: '',
-    image_url: '',
+    title: data?.title || '',
+    description: data?.description || '',
+    image_url: data?.img || '',
     ingredients: '',
-    instructions: '',
+    instructions: data?.instructions || '',
   })
 
   const handleAddIngredients = (value: string) => {
     setIngredients([...ingredients, value])
   }
-  console.log('ini data', data)
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -72,6 +71,7 @@ const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({
         <input
           name="title"
           type="text"
+          defaultValue={data?.title}
           className="input input-bordered input-sm"
           onChange={handleChange}
         />
@@ -83,6 +83,7 @@ const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({
         <input
           name="description"
           type="text"
+          defaultValue={data?.description}
           className="input input-bordered input-sm"
           onChange={handleChange}
         />
@@ -94,6 +95,7 @@ const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({
         <input
           name="image_url"
           type="text"
+          defaultValue={data?.img}
           className="input input-bordered input-sm"
           onChange={handleChange}
         />
@@ -142,13 +144,23 @@ const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({
         </label>
         <textarea
           name="instructions"
+          defaultValue={data?.instructions}
           className="textarea textarea-bordered"
           onChange={handleChange}
         />
       </div>
       <div className="flex justify-end mt-4 gap-2">
         {type === 'Edit' ? (
-          <button className="bg-green-500 hover:bg-green-400 text-primary-content btn btn-sm rounded-md">
+          <button
+            className="bg-green-500 hover:bg-green-400 text-primary-content btn btn-sm rounded-md"
+            onClick={() => {
+              console.log({
+                ...recipe,
+                img: recipe.image_url,
+                ingredients,
+              })
+            }}
+          >
             Edit
           </button>
         ) : (
