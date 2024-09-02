@@ -40,6 +40,34 @@ export const ADD_RECIPE = gql`
   }
 `
 
+export const EDIT_RECIPE = gql`
+  mutation EditRecipe(
+    $id: ID!
+    $title: String
+    $description: String!
+    $img: String
+    $ingredients: [String!]
+    $instructions: String
+  ) {
+    editRecipe(
+      id: $id
+      title: $title
+      description: $description
+      img: $img
+      ingredients: $ingredients
+      instructions: $instructions
+    ) {
+      id
+      title
+      description
+      img
+      ingredients
+      instructions
+      isFavorite
+    }
+  }
+`
+
 export const DELETE_RECIPE = gql`
   mutation DeleteRecipe($id: ID!) {
     deleteRecipe(id: $id) {

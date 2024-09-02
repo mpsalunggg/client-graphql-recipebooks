@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { ADD_RECIPE, DELETE_RECIPE, GET_RECIPES } from './queries'
+import { ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, GET_RECIPES } from './queries'
 import { Recipes } from './type'
 
 export const useGetRecipes = () => {
@@ -10,6 +10,12 @@ export const useGetRecipes = () => {
 export const useAddRecipe = () => {
   const [addRecipe, { data, loading, error }] = useMutation<Recipes>(ADD_RECIPE)
   return { addRecipe, data, loading, error }
+}
+
+export const useEditRecipe = () => {
+  const [editRecipe, { data, loading, error }] =
+    useMutation<Recipes>(EDIT_RECIPE)
+  return { editRecipe, data, loading, error }
 }
 
 export const useDeleteRecipe = () => {
