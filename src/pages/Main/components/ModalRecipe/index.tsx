@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from 'react'
 import { FaMinusCircle } from 'react-icons/fa'
 import { useModal } from '../../../../context/ModalContext'
 import { useAlert } from '../../../../context/AlertContext'
-import { useAddRecipe } from '../../../../services/recipes'
+import { useAddRecipe, useEditRecipe } from '../../../../services/recipes'
 import { GET_RECIPES } from '../../../../services/recipes/queries'
 import { Recipe } from '../../../../services/recipes/type'
 
@@ -12,7 +12,8 @@ const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({ type, data }) => {
   const [ingredients, setIngredients] = useState<string[]>(
     data?.ingredients || []
   )
-  const { addRecipe, loading } = useAddRecipe()
+  const { addRecipe, loading: loadingAdd } = useAddRecipe()
+  const { editRecipe, loading: loadingEdit } = useEditRecipe()
   const [recipe, setRecipe] = useState({
     title: data?.title || '',
     description: data?.description || '',
@@ -61,6 +62,32 @@ const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({ type, data }) => {
       ],
     })
   }
+
+  const handleEditRecipe = () => {
+    editRecipe({
+      variables: {
+        id: data?.id,
+        title: recipe.title,
+        description: recipe.description,
+        img: recipe.image_url,
+        ingredients,
+        instructions: recipe.instructions,
+      },
+      onCompleted: () => {
+        showAlert('Recipe updated successfully!', 'success')
+        closeModal()
+      },
+      onError: (err) => {
+        showAlert(`Failed to update recipe. ${err.message}`, 'error')
+      },
+      refetchQueries: [
+        {
+          query: GET_RECIPES,
+        },
+      ],
+    })
+  }
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4 text-primary">{type} Recipe</h2>
@@ -153,23 +180,18 @@ const ModalRecipe: FC<{ type: string; data?: Recipe }> = ({ type, data }) => {
         {type === 'Edit' ? (
           <button
             className="bg-green-500 hover:bg-green-400 text-primary-content btn btn-sm rounded-md"
-            onClick={() => {
-              console.log({
-                ...recipe,
-                img: recipe.image_url,
-                ingredients,
-              })
-            }}
+            disabled={loadingEdit}
+            onClick={() => handleEditRecipe()}
           >
-            Edit
+            {loadingEdit ? 'Loading' : 'Edit'}
           </button>
         ) : (
           <button
             className="text-primary-content btn-primary btn btn-sm rounded-md"
-            disabled={loading}
+            disabled={loadingAdd}
             onClick={() => handleAddRecipe()}
           >
-            {loading ? 'Loading' : 'Submit'}
+            {loadingAdd ? 'Loading' : 'Submit'}
           </button>
         )}
         <button
