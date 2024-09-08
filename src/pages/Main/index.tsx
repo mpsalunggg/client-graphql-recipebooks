@@ -7,16 +7,21 @@ import { Recipe } from '../../services/recipes/type'
 import Card from './components/Card'
 import Loading from '../../components/Loading'
 import Alert from '../../components/Alert'
+import ModalDetail from './components/ModalDetail'
 
 const Main: FC = () => {
   const { openModal } = useModal()
   const { loading, data } = useGetRecipes()
 
   const handleOpenModal = (type: string, data?: Recipe) => {
-    openModal(<ModalRecipe type={type} data={data}/>)
+    openModal(<ModalRecipe type={type} data={data} />)
   }
   const handleDeleteModal = (id: string) => {
     openModal(<ModalDelete id={id} />)
+  }
+
+  const handleDetailModal = (data: Recipe) => {
+    openModal(<ModalDetail data={data}/>)
   }
 
   return (
@@ -39,6 +44,7 @@ const Main: FC = () => {
                 item={item}
                 handleDeleteModal={() => handleDeleteModal(item.id)}
                 handleOpenModal={handleOpenModal}
+                handleDetailModal={handleDetailModal}
               />
             )
           })

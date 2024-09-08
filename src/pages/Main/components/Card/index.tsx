@@ -6,9 +6,15 @@ interface CardProps {
   item: Recipe
   handleDeleteModal: () => void
   handleOpenModal: (type: string, data: Recipe) => void
+  handleDetailModal: (data: Recipe) => void
 }
 
-const Card: FC<CardProps> = ({ item, handleDeleteModal, handleOpenModal }) => {
+const Card: FC<CardProps> = ({
+  item,
+  handleDeleteModal,
+  handleOpenModal,
+  handleDetailModal,
+}) => {
   const { img, title, description } = item
   return (
     <div
@@ -18,8 +24,14 @@ const Card: FC<CardProps> = ({ item, handleDeleteModal, handleOpenModal }) => {
       }}
     >
       <div className="card-body p-4 bg-opacity-60 bg-gray-800 rounded-md h-full">
-        <h2 className="card-title text-white text-xl font-bold">{title}</h2>
-        <p className="text-white line-clamp-1">{description}</p>
+        <div onClick={() => handleDetailModal(item)}>
+          <h2 className="card-title text-white text-xl font-bold cursor-pointer">
+            {title}
+          </h2>
+          <p className="text-white line-clamp-1 cursor-pointer">
+            {description}
+          </p>
+        </div>
         <div className="flex justify-between items-center">
           <FaHeart className="text-red-500" />
           <div className="flex justify-end gap-2">
